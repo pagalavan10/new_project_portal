@@ -1,0 +1,40 @@
+<apex:page showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" lightningStylesheets="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0" />
+    <apex:slds />
+    <apex:includeLightning />
+    <apex:pageMessages />
+    
+    <!--HEADER WITH LOGO -->
+    <table border="0" width="{!if($User.UITheme == 'Theme4t','100%','100%')}" cellspacing="0">
+            <tr>
+                <td width="23%" style="background-color:#F58D17;border-right:0px;border-left:0px;">
+                    <img src="{!$Resource.Track_Logo}" width="{!if($User.UITheme == 'Theme4t','100%','60%')}" align="left" />
+                </td>
+                <td width="54%" style="padding-top:4px;background-color:#F58D17">
+                    <b style="{!if($User.UITheme == 'Theme4t','font-size:20px;','font-size:25px;')}"><center>New Dumpster Delivery</center></b>
+                </td>
+                <td width="23%" style="background-color:#F58D17;border-right:0px;border-left:0px;">
+                    <img src="{!$Resource.Track_Logo}" width="{!if($User.UITheme == 'Theme4t','100%','60%')}" align="right" />
+                </td>
+            </tr>
+        </table>
+        
+        
+    
+    <div id="LightningAppDivId">
+        <!--Lightning Web Component will be included here. --> 
+    </div>
+    
+    <script>
+    $Lightning.use(
+        "c:NewProjectCommunity_Portal", // Name of Aura Dependency app where c is namespace.
+        function() { // Callback function
+            $Lightning.createComponent(
+                "c:newProjectCommunityPortal", // Name of Lightning Component where c is namespace.
+                {}, // attribute parameters
+                "LightningAppDivId" // Id of the element where Lightning Component will be rendered.
+            );
+        }
+    );
+    </script>
+</apex:page>

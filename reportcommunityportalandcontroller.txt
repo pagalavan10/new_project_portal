@@ -1,0 +1,61 @@
+<apex:page standardController="Report_Request__c" extensions="reportcommunityportalController" lightningStylesheets="false" sidebar="true" showHeader="true" >
+    <apex:form >
+        <apex:pageBlock title="Report Request">
+            <apex:pageBlockSection columns="1">
+                <apex:inputField value="{! Report_Request__c.Name}" />
+                <apex:inputField value="{! Report_Request__c.Job_address__c}" />
+               
+                
+                   <apex:inputField value="{! Report_Request__c.From_Date__c}" />
+                   <apex:inputField value="{! Report_Request__c.To_Date__c}" />
+              
+                
+                
+                <apex:inputField value="{! Report_Request__c.Pick_Up_Date__c}" />
+                <apex:inputField value="{! Report_Request__c.Delivery_Date__c}" />
+                <apex:inputField value="{! Report_Request__c.Weights__c}" />
+                
+                
+                    <apex:inputField value="{! Report_Request__c.concrete_only__c}" />
+                    <apex:inputField value="{! Report_Request__c.wood__c}" />
+                    <apex:inputField value="{! Report_Request__c.metal__c}" />
+                    <apex:inputField value="{! Report_Request__c.Asbestos__c}" />
+               
+                    
+                 <apex:inputField value="{! Report_Request__c.Report_Type__c}" />
+                
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{! save}" value="Save"/>
+                <apex:commandButton action="{! cancel}" value="Cancel"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+public class reportcommunityportalController {
+    public Report_Request__c rep {get;set;}
+    /*
+    public reportcommunityportalController (ApexPages.StandardSetController Controller)
+    {
+        this.rep = (Report_Request__c) Controller.getRecord();
+    }
+    */
+    public PageReference dosave()
+    {
+        try
+        {
+            database.upsert(rep);
+            return new PageReference('/' + rep.Id);
+        }
+        catch(exception e)
+        {
+            system.debug('Exception >'+e);
+        }
+        return null;
+    }
+
+}

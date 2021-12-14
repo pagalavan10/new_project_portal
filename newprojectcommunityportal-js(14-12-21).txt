@@ -1,0 +1,303 @@
+import { LightningElement, api, track, wire } from 'lwc';
+import createNewDumpster from '@salesforce/apex/CustomLookupDumpsterController.createNewDumpster';
+import getDumpsterInvoiceRecordId from '@salesforce/apex/CustomLookupDumpsterController.getDumpsterInvoiceRecordId';
+
+import getAccounts from '@salesforce/apex/getRecordDataController.getAccounts';
+import { getRecord,getFieldValue  } from 'lightning/uiRecordApi';
+import AccID from '@salesforce/schema/Account.Id';
+import AccName from '@salesforce/schema/Account.Name';
+
+import showSuccessMessageTemplate from './showSuccessMessageTemplate.html';
+import newProjectTemplate from './newProjectCommunityPortal.html';
+
+const FIELDS = ["Account.Id","Account.Name"];
+export default class NewProjectCommunityPortal extends LightningElement {
+
+    
+    
+    @wire(getAccounts) wiredAccounts;
+
+   
+    @api label="Account Name";
+accountName = "Precision Demolition";
+    
+    @wire(getRecord, {recordId : "0010100000Ldxsb" , fields:[AccID,AccName] })
+    selectedRecord;
+    wiredAccount({ error, data })
+    {
+        if (data)
+        {
+            this.accountName = this.selectedRecord.data.fields.AccName.value;
+            alert("========"+data);
+        }
+        else 
+        {
+            this.error = error;
+            console.log('OUTPUT accountNmae: '+ error);
+        }
+    }
+
+    accCardNumber;
+    accCardNumberAlt=0;
+    accExpireMonth;
+    accExpireMonthAlt=0;
+    accExpireYear;
+    accExpireYearAlt=0;
+    accSecurityCodeAlt=0;
+    accBillingZipCode;
+    accBillingZipCodeAlt=0;
+    accDescription;
+    accHaulbrookeRegion = '';
+    accountid   ='0010100000Ldxsb';
+    address='';
+    dumpsterSizevalue = '';
+    dateValue='';
+    currentDate= new Date();
+    timeValue = '';
+    comments='';
+    phone='';
+    po='';
+    cardDetailsValue = 'Use Existing';
+    cardOption='Use Existing';
+    isShowNewCardDetails;
+    showSuccessMessage;
+    dumpsterLink;
+    dumpsterInvoiceLink;
+
+    handleDumpsterCreate(){
+
+        if((this.cardOption === 'New Card' && this.accountName != '' && this.address != '' && this.dumpsterSizevalue != '' && this.dateValue != '' && this.accCardNumberAlt != '' && this.accExpireMonthAlt != '' && this.accExpireYearAlt != '' && this.accSecurityCodeAlt != '' && this.accBillingZipCodeAlt != '' ) || (this.cardOption === 'Use Existing' && this.accountName != '' && this.address != '' && this.dumpsterSizevalue != '' && this.dateValue != '')){
+            alert("inside");
+        console.log('OUTPUT accountNmae: '+ this.accountid);
+        console.log('OUTPUT address: '+ this.address);
+        console.log('OUTPUT dumpstersize vlue: '+this.dumpsterSizevalue);
+        console.log('OUTPUT date value: '+ this.dateValue);
+        console.log('OUTPUT time value: '+  this.timeValue);
+        console.log('OUTPUT commetns: '+ this.comments);
+        console.log('OUTPUT phone: '+ this.phone);
+        console.log('OUTPUT po: '+ this.po);
+        console.log('OUTPUT card number alt: '+ this.accCardNumberAlt);
+        console.log('OUTPUT expire month alt: '+ this.accExpireMonthAlt);
+        console.log('OUTPUT expire year alt: '+ this.accExpireYearAlt);
+        console.log('OUTPUT security code alt: '+ this.accSecurityCodeAlt);
+        console.log('OUTPUT Billing zip code alt: '+ this.accBillingZipCodeAlt);
+
+                //Returns a promise
+                createNewDumpster(
+                    {
+                        accountName: this.accountid,
+                        address: this.address,
+                        dumpsterSizevalue:this.dumpsterSizevalue,
+                        dateValue:this.dateValue,
+                        timeValue:this.timeValue,
+                        comments:this.comments,
+                        phone:this.phone,
+                        po:this.po,
+                        accCardNumberAlt:this.accCardNumberAlt,
+                        accExpireMonthAlt:this.accExpireMonthAlt,
+                        accExpireYearAlt:this.accExpireYearAlt,
+                        accSecurityCodeAlt:this.accSecurityCodeAlt,
+                        accBillingZipCodeAlt:this.accBillingZipCodeAlt,
+                        cardOption:this.cardOption
+                        
+
+                    })
+                .then(results=>{
+                    console.log('results>> : '+ JSON.stringify(results));
+                    this.dumpRecId = results;
+                    /** FOR GUEST USER FORCE.COM SITE TO BOTH SANBOX AND PRODUCTION */
+                    //this.dumpsterLink = 'https://test-haulbrooke.cs61.force.com/showRecord?id='+results;
+                    //this.dumpsterLink = 'https://haulbrooke.secure.force.com/showRecord?id='+results;
+
+                    /** FOR SALESFORCE URL TO BOTH SANBOX AND PRODUCTION */
+                    //this.dumpsterLink = 'https://haulbrooke--test.my.salesforce.com/'+results;
+                    this.dumpsterLink = 'https://haulbrooke--uat.my.salesforce.com/'+results;
+                    alert('test');
+
+                    console.log('OUTPUT : dumspter record id >>'+ results);
+                    //console.log('OUTPUT : dumspter record id >>'+ this.dumpRecId);
+                    //alert('New Delivery Created Successfully – Thank you for your business!');
+                    this.handlegetDumpsterInvoiceRecordId();
+                    this.showSuccessMessage = true;
+                    //reset the account
+                    //this.removeItem();
+
+                    /*
+                    //reset the address
+                    this.resetStreet = '';
+                    this.resetCity = '';
+                    this.resetProvince ='';
+                    this.resetPostalCode ='';
+                    this.resetCountry ='';
+
+                    //reset the other fields
+                    this.dumpsterSizevalue='';
+                    this.timeValue='';
+                    
+                    this.resetDateValue ='';
+                    this.resetComments ='';
+                    this.resetPhone ='';
+                    this.resetPo ='';
+                    */
+                    //this.data=results;
+                // this.isError=false;
+                })
+                .catch(error=>{
+                    console.log('error>> : '+ error);
+                    console.log(JSON.stringify(error));
+
+                    //this.isError=true;
+                    //this.errorMessage=error.body.message;    
+                });
+        }
+        else{
+            alert('Please Fill All the Mandatory Fields');
+        }
+    }
+    handlegetDumpsterInvoiceRecordId(){
+        console.log('OUTPUT : handlegetDumpsterInvoiceRecordId method is called');
+        getDumpsterInvoiceRecordId({
+                dumpsId : this.dumpRecId
+            })
+            .then(results=>{
+                        console.log('results>> : '+ JSON.stringify(results));
+                        this.dumpInvoiceRecId = results;
+                        console.log('OUTPUT : dumpster invoice record id result>> '+ this.dumpInvoiceRecId);
+                    
+            })
+            .catch(error=>{
+                        console.log('error>> : '+ error);
+                        console.log(JSON.stringify(error));
+
+                        //this.isError=true;
+                        //this.errorMessage=error.body.message;    
+            });
+    }
+
+    handleShowDumpsterInvoiceRecord(){
+                    if(this.dumpInvoiceRecId != null){
+                        /** FOR GUEST USER FORCE.COM SITE TO BOTH SANBOX AND PRODUCTION */
+                        //this.dumpsterInvoiceLink = 'https://test-haulbrooke.cs61.force.com/showRecord?id='+this.dumpInvoiceRecId;
+                        //this.dumpsterInvoiceLink = 'https://haulbrooke.secure.force.com/showRecord?id='+this.dumpInvoiceRecId;
+
+                        /** FOR SALESFORCE URL TO BOTH SANBOX AND PRODUCTION */
+                        //this.dumpsterInvoiceLink = 'https://haulbrooke--test.my.salesforce.com/'+this.dumpInvoiceRecId;
+                        this.dumpsterInvoiceLink = 'https://haulbrooke--uat.my.salesforce.com/'+this.dumpInvoiceRecId;
+                    }else{
+                        alert('Dumpster Invoice Record is not Available!');
+                    }
+                    
+    }
+    handleDumpsterSizeChange(event) {
+        this.dumpsterSizevalue = event.detail.value;
+        console.log('dumpster size>>'+ this.dumpsterSizevalue);
+    }
+    handleChange(event){
+        alert("inside");
+        if(event.target.label=="Delivery Date"){
+          /*  var newdate = new Date();
+            if(event.target.value  <= newdate.getDate() )
+            { */
+                this.dateValue = event.target.value;
+                console.log('delivery date>>' + this.dateValue);
+                console.log('today====>'+this.currentDate);
+           /* }
+            else
+            {
+                alert("Enter Correct Date");
+            }*/
+            
+        }
+        if(event.target.label=="Comments"){
+            this.comments = event.target.value;
+            console.log('comments>>>' + this.comments);
+        }
+        if(event.target.label=="Phone"){
+            this.phone = event.target.value;
+            console.log('phone>>' +  this.phone);
+        }
+        if(event.target.label=="Purchase Order"){
+            this.po = event.target.value;
+            console.log('po>>>' + this.po);
+        }
+        
+        if(event.target.label=="Card Number"){
+            this.accCardNumberAlt = event.target.value;
+            console.log('OUTPUT : card number Alt>>'+ this.accCardNumberAlt);
+        }
+
+        if(event.target.label=="Expiration Month"){
+            this.accExpireMonthAlt = event.target.value;
+            console.log('OUTPUT : expire month alt>>'+ this.accExpireMonthAlt);
+        }
+
+        if(event.target.label=="Expiration Year"){
+            this.accExpireYearAlt = event.target.value;
+            console.log('OUTPUT : expire year alt'+ this.accExpireYearAlt);
+        }
+
+        if(event.target.label=="Security Code"){
+            this.accSecurityCodeAlt = event.target.value;
+            console.log('OUTPUT : security code alt>> '+ this.accSecurityCodeAlt);
+        }
+
+        if(event.target.label=="Billing Zip Code"){
+            this.accBillingZipCodeAlt = event.target.value;
+            console.log('OUTPUT : zip code alt>>'+ this.accBillingZipCodeAlt);
+        }
+        if(event.target.label=="Card Details"){
+            this.cardOption = event.target.value;
+            console.log('card Option >>>' + this.cardOption);
+            if(this.cardOption == 'New Card'){
+                this.isShowNewCardDetails = true;
+            }else{
+                this.isShowNewCardDetails = false;
+            }
+    }
+
+    }
+    genericInputChange(event){
+        
+        console.log('Street => ' , event.target.street);
+        console.log('City => ' , event.target.city);
+        console.log('Province => ' , event.target.province);
+        console.log('Country => ' , event.target.country);
+        console.log('postal Code => ' , event.target.postalCode);
+        this.address = event.target.street +','+ event.target.city +','+ event.target.province +','+ event.target.country +','+ event.target.postalCode;
+    console.log('OUTPUT : combine address>>'+ this.address);
+    }
+    handleTimeChange(event) {
+        this.timeValue = event.detail.value;
+        console.log('time valeu>>' + this.timeValue);
+    }
+    get options() {
+        return [
+            { label: '20 Yard', value: '20yd' },
+            { label: '30 Yard', value: '30yd' },
+            { label: '40 Yard', value: '40yd' },
+            { label: '20yd - Concrete only', value: '20yd - Concrete only' },
+        ];
+    }
+    get timeoptions() {
+        return [
+            { label: 'AM', value: '9am' },
+            { label: 'PM', value: '2pm' },
+         ];
+    }
+    get cardDetailsOptions() {
+        return [
+            { label: 'Use Existing', value: 'Use Existing' },
+            { label: 'New Card', value: 'New Card' },
+        ];
+    }
+    render(){
+
+        if(this.showSuccessMessage == true){
+            return showSuccessMessageTemplate;
+        }
+        else{
+           return newProjectTemplate;
+        }
+    }
+
+}
