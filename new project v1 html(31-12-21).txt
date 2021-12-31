@@ -1,0 +1,15 @@
+<template>
+    <lightning-input type="text" label="Account Name" value="read only" readonly></lightning-input>
+    <lightning-input type="date" label="date" onchange={handleChange}></lightning-input>
+    <p>You are located in: {city}</p>
+    <lightning-input-address
+        address-label="Address"
+        street-label="Street"
+        city-label="City"
+        country-label="Country"
+        province-label="Province"
+        postal-code-label="PostalCode"
+        city={city}
+        onchange={handleChange} ></lightning-input-address>
+
+</template>

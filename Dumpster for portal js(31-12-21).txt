@@ -1,0 +1,10 @@
+import { LightningElement, wire } from 'lwc';
+import objContactList from '@salesforce/apex/lwcTrueFalseDataCtrl.objContactList';
+import objContactList_austin from '@salesforce/apex/lwcTrueFalseDataCtrl.objContactList_austin';
+import objContactList_san from '@salesforce/apex/lwcTrueFalseDataCtrl.objContactList_san';
+export default class Dumpster_for_portal extends LightningElement {
+    @wire(objContactList) conObjItem;
+    @wire(objContactList_austin) conObjItem_austin;
+    @wire(objContactList_san) conObjItem_san;
+    
+}

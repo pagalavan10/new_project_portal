@@ -1,0 +1,119 @@
+<template>
+     <lightning-card>
+        <div class="slds-m-around_medium">
+            
+            <h3>Austin Region</h3>
+            <template if:true={conObjItem_austin.data}>
+                <table class="slds-table slds-table_col-bordered slds-table_bordered slds-table_edit slds-table_fixed-layout slds-table_resizable-cols slds-tree slds-table_tree" style="border-collapse:collapse; border:1px #ddd solid;">
+                    <thead>
+                        <tr>
+                            <td style="background: #eee; font-weight:bold;">Record ID2</td>
+                            <td style="background: #eee; font-weight:bold;">Name</td>
+                            <td style="background: #eee; font-weight:bold;">Dumpster Address</td>
+                            <td style="background: #eee; font-weight:bold;">Purchase Order</td>
+                            <td style="background: #eee; font-weight:bold;">Status</td>
+                            <td style="background: #eee; font-weight:bold;">Dumpster ID</td>
+                            <td style="background: #eee; font-weight:bold;">Track Link</td>
+                            <td style="background: #eee; font-weight:bold;">Action</td>                           
+                        </tr>
+                    </thead>
+                     <tbody>   
+                                             
+                        <template for:each={conObjItem_austin.data} for:item="con">
+                            <tr key={con.Id}>
+                                <td>{con.Name}</td>
+                                <td>{con.AAccountccount__r.Name}</td>
+                                <td>{con.Pdf_Parser_Delivery_Address__c}</td>
+                                <td>{con.Purchase_Order__c}</td>
+                                <td>{con.Status__c}</td>
+                               <!-- <td>{con.Container_Asset__r.Name}</td> -->
+                                <td>{con.Track_Link__c}</td>
+                                <td>{con.Action__c}</td>                                
+                            </tr>
+                        </template>                           
+                     </tbody>
+                 </table>
+                
+            </template>
+            <template if:true={conObjItem_austin.error}>
+                {contacts.error}
+            </template>
+            <br>
+            <h3>Houstin Region </h3>
+            <template if:true={conObjItem.data}>
+                <table class="slds-table slds-table_col-bordered slds-table_bordered slds-table_edit slds-table_fixed-layout slds-table_resizable-cols slds-tree slds-table_tree" style="border-collapse:collapse; border:1px #ddd solid;">
+                    <thead>
+                        <tr>
+                            <td style="background: #eee; font-weight:bold;">Record ID2</td>
+                            <td style="background: #eee; font-weight:bold;">Name</td>
+                            <td style="background: #eee; font-weight:bold;">Dumpster Address</td>
+                            <td style="background: #eee; font-weight:bold;">Purchase Order</td>
+                            <td style="background: #eee; font-weight:bold;">Status</td>
+                          <!--  <td style="background: #eee; font-weight:bold;">Dumpster ID</td> -->
+                            <td style="background: #eee; font-weight:bold;">Track Link</td>
+                            <td style="background: #eee; font-weight:bold;">Action</td>                           
+                        </tr>
+                    </thead>
+                     <tbody>   
+                                             
+                        <template for:each={conObjItem.data} for:item="con">
+                            <tr key={con.Id}>
+                                <td>{con.Name}</td>
+                                <td>{con.AAccountccount__r.Name}</td>
+                                <td>{con.Pdf_Parser_Delivery_Address__c}</td>
+                                <td>{con.Purchase_Order__c}</td>
+                                <td>{con.Status__c}</td>
+                               <!-- <td>{con.Container_Asset__r.Name}</td> -->
+                                <td>{con.Track_Link__c}</td>
+                                <td>{con.Action__c}</td>                                
+                            </tr>
+                        </template>                           
+                     </tbody>
+                 </table>
+                
+            </template>
+            <template if:true={conObjItem.error}>
+                {contacts.error}
+            </template>
+            <br/>
+            <h3>San Antonio Region</h3>
+            <template if:true={conObjItem_san.data}>
+                <table class="slds-table slds-table_col-bordered slds-table_bordered slds-table_edit slds-table_fixed-layout slds-table_resizable-cols slds-tree slds-table_tree" style="border-collapse:collapse; border:1px #ddd solid;">
+                    <thead>
+                        <tr>
+                            <td style="background: #eee; font-weight:bold;">Record ID2</td>
+                            <td style="background: #eee; font-weight:bold;">Name</td>
+                            <td style="background: #eee; font-weight:bold;">Dumpster Address</td>
+                            <td style="background: #eee; font-weight:bold;">Purchase Order</td>
+                            <td style="background: #eee; font-weight:bold;">Status</td>
+                            <td style="background: #eee; font-weight:bold;">Dumpster ID</td>
+                            <td style="background: #eee; font-weight:bold;">Track Link</td>
+                            <td style="background: #eee; font-weight:bold;">Action</td>                           
+                        </tr>
+                    </thead>
+                     <tbody>   
+                                             
+                        <template for:each={conObjItem_san.data} for:item="con">
+                            <tr key={con.Id}>
+                                <td>{con.Name}</td>
+                                <td>{con.AAccountccount__r.Name}</td>
+                                <td>{con.Pdf_Parser_Delivery_Address__c}</td>
+                                <td>{con.Purchase_Order__c}</td>
+                                <td>{con.Status__c}</td>
+                               <!-- <td>{con.Container_Asset__r.Name}</td> -->
+                                <td>{con.Track_Link__c}</td>
+                                <td>{con.Action__c}</td>                                
+                            </tr>
+                        </template>                           
+                     </tbody>
+                 </table>
+                
+            </template>
+            <template if:true={conObjItem_san.error}>
+                {contacts.error}
+            </template>
+            <br>
+        
+        </div>
+    </lightning-card> 
+</template>

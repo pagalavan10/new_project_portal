@@ -1,0 +1,17 @@
+public class lwcTrueFalseDataCtrl {
+     @AuraEnabled(cacheable=true)
+    public static List<Dumpsters__c> objContactList() {
+        List<Dumpsters__c> dumplist = [Select Id, Name, AAccountccount__r.Name, Status__c, Container_Asset__r.Name , Purchase_Order__c,Track_Link__c,Action__c,Pdf_Parser_Delivery_Address__c From Dumpsters__c where Haulbrooke_Regional_Base__c = 'Houston' order by Name];
+        return dumplist;
+    }
+    @AuraEnabled(cacheable=true)
+    public static List<Dumpsters__c> objContactList_austin() {
+        List<Dumpsters__c> dumplist = [Select Id, Name, AAccountccount__r.Name, Status__c, Container_Asset__r.Name , Purchase_Order__c,Track_Link__c,Action__c,Pdf_Parser_Delivery_Address__c From Dumpsters__c where Austin_Checkbox_Helper__c = TRUE order by Name];
+        return dumplist;
+    }
+    @AuraEnabled(cacheable=true)
+    public static List<Dumpsters__c> objContactList_san() {
+        List<Dumpsters__c> dumplist = [Select Id, Name, AAccountccount__r.Name, Status__c, Container_Asset__r.Name , Purchase_Order__c,Track_Link__c,Action__c,Pdf_Parser_Delivery_Address__c From Dumpsters__c where Haulbrooke_Regional_Base__c = 'San Antonio' order by Name];
+        return dumplist;
+    }
+}

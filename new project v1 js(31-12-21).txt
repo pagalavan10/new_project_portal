@@ -1,0 +1,36 @@
+import { LightningElement } from 'lwc';
+export default class NewProjectV1 extends LightningElement {
+    date1 = '';
+   
+    connectedCallback(){
+        var today = new Date();
+        
+        this.date1 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        console.log('date>>>>>>>>>>>'+this.date1);
+        console.log(today.toISOString())
+        
+    }
+    city = "San Francisco";
+
+
+    handleChange(event) {
+        alert("inside");
+        console.log('input date'+event.target.value);
+        if(event.target.label == "date"){
+            alert("check");
+            console.log(".........>>>"+this.date1);
+            if(event.target.value >= this.date1)
+            {
+                alert("completed");
+                console.log(".........>>>"+event.target.value);
+                console.log(".........>>>"+this.date1);
+            }
+        }
+        else{
+            alert("out");
+        }
+        this.city = event.target.city;
+        
+
+    }
+}
