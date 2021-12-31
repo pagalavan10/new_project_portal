@@ -1,0 +1,24 @@
+public class reportcommunityportalController {
+    public Report_Request__c rep {get;set;}
+   
+    public reportcommunityportalController (ApexPages.StandardController Controller)
+    {
+        this.rep = (Report_Request__c) Controller.getRecord();
+    }
+    public PageReference dosave()
+    {
+        try
+        {
+            database.upsert(rep);
+            PageReference pg = new PageReference('/apex/reportcommunityportal');
+            pg.setRedirect(true);
+            return pg;
+        }
+        catch(exception e)
+        {
+            system.debug('Exception >'+e);
+        }
+        return null;
+    }
+
+}
