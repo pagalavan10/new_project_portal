@@ -1,0 +1,73 @@
+import { LightningElement , track } from 'lwc';
+export default class NewProjectV1 extends LightningElement {
+    date1 = '';
+    dateinput = '';
+   
+  /*  connectedCallback(){
+        var today = new Date();
+        
+        this.date1 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        console.log('date>>>>>>>>>>>'+this.date1);
+        console.log(today.toISOString())
+        
+    }
+    city = "San Francisco";
+
+
+    handleChange(event) {
+        alert("inside");
+        console.log('input date'+event.target.value);
+        let inputDate = this.template.querySelector(".dateCmp");
+        this.dateinput = inputDate.value;
+        var d1 = new Date(dateinput);
+        if(event.target.label == "date"){
+            alert("check");
+            
+            console.log(".........>>>"+this.date1);
+            console.log(".>>>>>----->>>"+this.dateinput);
+            if(d1 < today)
+            {
+                alert("completed111");
+                console.log(".........>>>"+event.target.value);
+                console.log(".........>>>"+this.date1);
+            }
+            else
+            {
+                alert("Enter Correct Date1111");
+            }
+        }
+        else{
+            alert("out");
+        }
+        this.city = event.target.city;
+        
+
+    } */
+    submitData() {
+      
+           alert("inside if");
+       
+            let inputDate = this.template.querySelector(".dateCmp");
+            
+            let dateValue = inputDate.value;
+            var d1 = new Date(dateValue);
+            
+            var today = new Date();
+            
+                    
+            if((d1 < today)&&(d1 != today))
+            {
+                alert("check");
+            inputDate.setCustomValidity("Date value can not be less than today");
+            console.log("--------->>>>"+this.dateValue);
+            console.log("<<<<<<<<<<<<<<<<<"+this.d1);
+            }
+            
+            else {
+                inputDate.setCustomValidity("");
+            }
+            inputDate.reportValidity();
+        
+        
+    }
+}

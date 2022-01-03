@@ -1,0 +1,17 @@
+<template>
+    <lightning-input type="text" label="Account Name" value="read only" readonly></lightning-input>
+    <lightning-input class="dateCmp" type="date" label="date"></lightning-input>
+    <p>You are located in: {city}</p>
+    <lightning-input-address
+        address-label="Address"
+        street-label="Street"
+        city-label="City"
+        country-label="Country"
+        province-label="Province"
+        postal-code-label="PostalCode"
+        city={city}
+        onchange={handleChange} ></lightning-input-address>
+       <!--<lightning-input class="dateCmp" label="Enter Date" type="date" required ></lightning-input><br/><br/>-->
+         <lightning-button class="slds-align_absolute-center" label="Submit" variant="brand" onclick={submitData}></lightning-button>
+
+</template>
